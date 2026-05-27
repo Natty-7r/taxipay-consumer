@@ -1,7 +1,7 @@
 import { formatCurrency } from '@/helpers/number.helper';
 import { CircleDollarSign } from 'lucide-react';
 import Image from 'next/image';
-import taxiIcon from '@/assets/svg/taxi-icon.png';
+import taxiIcon from '@/assets/images/png/taxi-icon.png';
 
 interface TotalSpentCardProps {
   amount: number;
