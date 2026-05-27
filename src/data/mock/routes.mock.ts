@@ -26,7 +26,7 @@ export const mockRoutes: MockRoute[] = [
     routeTo: 'Megenagna',
     price: 120,
     estimatedTime: '15 min',
-    distance: '5.2 km',
+    distance: '8.2 km',
   },
   {
     id: 'r2',
