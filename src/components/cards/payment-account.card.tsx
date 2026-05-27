@@ -1,3 +1,5 @@
+import { CreditCard, ChevronRight } from 'lucide-react';
+
 interface PaymentAccountCardProps {
   provider: string;
   phoneNumber: string;
@@ -10,11 +12,7 @@ export function PaymentAccountCard({ provider, phoneNumber }: PaymentAccountCard
       <div className="bg-card rounded-2xl border border-border p-4 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-3">
           <div className="w-[42px] h-[42px] rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--color-secondary)' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="6" width="18" height="13" rx="2" stroke="#FFC107" strokeWidth="1.8"/>
-              <path d="M3 10h18" stroke="#FFC107" strokeWidth="1.8"/>
-              <rect x="6" y="14" width="4" height="2" rx="0.5" fill="#FFC107"/>
-            </svg>
+            <CreditCard className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
           </div>
           <div>
             <p className="text-[15px] font-bold text-foreground">{provider}</p>
@@ -23,6 +21,7 @@ export function PaymentAccountCard({ provider, phoneNumber }: PaymentAccountCard
         </div>
         <button className="border border-border rounded-full px-4 py-2 text-[13px] font-semibold text-foreground bg-transparent">
           Change
+          <ChevronRight className="w-3 h-3 inline ml-1" />
         </button>
       </div>
     </div>
