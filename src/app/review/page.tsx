@@ -21,7 +21,7 @@ function ReviewTripContent() {
   const baseFare = route.price - distanceFee;
 
   const handleConfirmPayment = () => {
-    router.push('/');
+    router.push(`/receipt?routeId=${routeId}`);
   };
 
   return (
