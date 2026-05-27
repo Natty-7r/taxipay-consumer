@@ -1,62 +1,46 @@
 @import "tailwindcss";
 
-/* Light Mode (default) */
-:root {
-  --primary: #FFC107;
-  --primary-foreground: #1A2A3A;
-  --secondary: #1A2A3A;
-  --secondary-foreground: #FFFFFF;
-  --success: #10B981;
-  --success-foreground: #FFFFFF;
-  --error: #EF4444;
-  --error-foreground: #FFFFFF;
-  --warning: #F59E0B;
-  --warning-foreground: #1A2A3A;
-  --background: #FFFFFF;
-  --foreground: #1A2A3A;
-  --card: #F3F4F6;
-  --card-foreground: #1A2A3A;
-  --muted: #F3F4F6;
-  --muted-foreground: #6B7280;
-  --border: #E5E7EB;
+/* Custom theme configuration */
+@theme {
+  --color-primary: #FFC107;
+  --color-primary-foreground: #1A2A3A;
+  --color-secondary: #1A2A3A;
+  --color-secondary-foreground: #FFFFFF;
+  --color-success: #10B981;
+  --color-success-foreground: #FFFFFF;
+  --color-error: #EF4444;
+  --color-error-foreground: #FFFFFF;
+  --color-background: #FFFFFF;
+  --color-foreground: #1A2A3A;
+  --color-card: #FFFFFF;
+  --color-card-foreground: #1A2A3A;
+  --color-muted: #F9FAFB;
+  --color-muted-foreground: #9CA3AF;
+  --color-border: #F0F0F0;
+  
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.2);
+  
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Dark Mode */
+/* Dark mode */
 .dark {
-  --primary: #FFC107;
-  --primary-foreground: #1A2A3A;
-  --secondary: #1A2A3A;
-  --secondary-foreground: #FFFFFF;
-  --success: #10B981;
-  --success-foreground: #FFFFFF;
-  --error: #EF4444;
-  --error-foreground: #FFFFFF;
-  --warning: #F59E0B;
-  --warning-foreground: #1A2A3A;
-  --background: #0F1720;
-  --foreground: #FFFFFF;
-  --card: #1A2A3A;
-  --card-foreground: #FFFFFF;
-  --muted: #1A2A3A;
-  --muted-foreground: #9CA3AF;
-  --border: #374151;
-  --glass-bg: rgba(26, 42, 58, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --color-background: #0F1720;
+  --color-foreground: #FFFFFF;
+  --color-card: #1A2A3A;
+  --color-card-foreground: #FFFFFF;
+  --color-muted: #1F2937;
+  --color-muted-foreground: #9CA3AF;
+  --color-border: #2D3A4A;
 }
 
 /* Base styles */
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Mobile optimizations */
@@ -78,20 +62,24 @@ a,
 /* Hide scrollbar on mobile */
 @media (max-width: 428px) {
   ::-webkit-scrollbar {
-    width: 0px;
+    width: 0;
     background: transparent;
   }
 }
 
-/* Glassmorphism utility */
+/* Glassmorphism */
 .glass {
-  background: var(--glass-bg);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Container for mobile */
+.dark .glass {
+  background: rgba(26, 42, 58, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Mobile container */
 .mobile-container {
   max-width: 428px;
   margin-left: auto;
@@ -100,7 +88,7 @@ a,
   padding-right: 1rem;
 }
 
-/* Glow animation */
+/* Animations */
 @keyframes glow {
   0%, 100% { box-shadow: 0 0 5px rgba(255,193,7,0.5); }
   50% { box-shadow: 0 0 20px rgba(255,193,7,0.8); }
@@ -110,7 +98,6 @@ a,
   animation: glow 2s ease-in-out infinite;
 }
 
-/* Scan line animation */
 @keyframes scan {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100%); }
