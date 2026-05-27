@@ -1,4 +1,5 @@
 import { formatCurrency } from '@/helpers/number.helper';
+import { Circle } from 'lucide-react';
 
 interface RecentActivityCardProps {
   route: string;
@@ -14,9 +15,9 @@ export function RecentActivityCard({ route, amount, date, time, provider, isLast
   return (
     <div className={`flex items-center justify-between px-[18px] py-[14px] ${!isLast ? 'border-b border-border' : ''}`}>
       <div className="flex items-center gap-3">
-        <div
-          className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-          style={{ background: isRecent ? 'var(--color-primary)' : '#D1D5DB' }}
+        <Circle
+          className="w-2.5 h-2.5 fill-current flex-shrink-0"
+          style={{ color: isRecent ? 'var(--color-primary)' : '#D1D5DB' }}
         />
         <div>
           <p className="text-[14px] font-bold text-foreground mb-0.5">{route}</p>
