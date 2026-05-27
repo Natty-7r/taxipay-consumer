@@ -1,5 +1,8 @@
+import cbeIcon from '@/assets/images/png/cbe.png';
+import mpesaIcon from '@/assets/images/png/mpesa.png';
+import telebirrIcon from '@/assets/images/png/telebirr.png';
 import { formatCurrency } from '@/helpers/number.helper';
-import { CreditCard, Smartphone, Building2 } from 'lucide-react';
+import { IconCard } from './icon.card';
 
 interface LinkedAccountCardProps {
   provider: string;
@@ -9,41 +12,28 @@ interface LinkedAccountCardProps {
   isLast?: boolean;
 }
 
-const PROVIDER_ICONS: Record<string, { icon: React.ReactNode; bgColor: string }> = {
-  TELEBIRR: {
-    icon: <CreditCard className="w-5 h-5" style={{ color: '#FFC107' }} />,
-    bgColor: '#1A2A3A',
-  },
-  'M-PESA': {
-    icon: <Smartphone className="w-5 h-5" style={{ color: '#2E7D32' }} />,
-    bgColor: '#E8F5E9',
-  },
-  CBE: {
-    icon: <Building2 className="w-5 h-5" style={{ color: '#3F51B5' }} />,
-    bgColor: '#EEF2FF',
-  },
+const PROVIDER_CONFIG: Record<string, { src: any; alt: string }> = {
+  TELEBIRR: { src: telebirrIcon, alt: 'Telebirr' },
+  'M-PESA': { src: mpesaIcon, alt: 'M-Pesa' },
+  CBE: { src: cbeIcon, alt: 'CBE' },
 };
 
 export function LinkedAccountCard({ provider, phoneNumber, spent, isPrimary, isLast }: LinkedAccountCardProps) {
-  const providerStyle = PROVIDER_ICONS[provider] || {
-    icon: <span className="text-xs font-bold text-foreground">{provider[0]}</span>,
-    bgColor: 'var(--color-muted)',
-  };
+  const config = PROVIDER_CONFIG[provider];
 
   return (
     <div className={`flex items-center justify-between px-[18px] py-[14px] ${!isLast ? 'border-b border-border' : ''}`}>
       <div className="flex items-center gap-3">
-        <div
-          className="w-[38px] h-[38px] rounded-[10px] flex items-center justify-center flex-shrink-0"
-          style={{ background: providerStyle.bgColor }}
-        >
-          {providerStyle.icon}
-        </div>
+        {config ? (
+          <IconCard src={config.src} alt={config.alt} size="md" variant="secondary" shape="rounded" />
+        ) : (
+          <IconCard icon={<span className="text-xs font-bold">{provider[0]}</span>} size="md" variant="muted" shape="rounded" />
+        )}
         <div>
           <div className="flex items-center gap-1.5 mb-0.5">
             <span className="text-[14px] font-bold text-foreground">{provider}</span>
             {isPrimary && (
-              <span className="text-[9px] font-bold tracking-[0.8px] uppercase px-2 py-0.5 rounded-full" style={{ background: '#FFF3CD', color: '#956A00' }}>
+              <span className="text-[9px] font-bold tracking-[0.8px] uppercase px-2 py-0.5 rounded-full bg-primary/10 text-primary">
                 Primary
               </span>
             )}
