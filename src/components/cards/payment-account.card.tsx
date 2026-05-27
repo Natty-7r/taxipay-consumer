@@ -1,34 +1,29 @@
-import { ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-
 interface PaymentAccountCardProps {
   provider: string;
   phoneNumber: string;
-  onPressChange?: () => void;
 }
 
-export function PaymentAccountCard({ provider, phoneNumber, onPressChange }: PaymentAccountCardProps) {
+export function PaymentAccountCard({ provider, phoneNumber }: PaymentAccountCardProps) {
   return (
-    <div className="bg-card rounded-2xl p-5 mb-6 border border-border">
-      <p className="text-xs font-medium text-muted-foreground mb-3">PAYING WITH</p>
-      
-      <div className="flex items-center justify-between">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="font-semibold text-foreground">{provider}</span>
+    <div className="mb-5">
+      <h2 className="text-[11px] font-bold tracking-[1.2px] text-muted-foreground uppercase mb-3">Paying With</h2>
+      <div className="bg-card rounded-2xl border border-border p-4 flex items-center justify-between shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="w-[42px] h-[42px] rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--color-secondary)' }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="6" width="18" height="13" rx="2" stroke="#FFC107" strokeWidth="1.8"/>
+              <path d="M3 10h18" stroke="#FFC107" strokeWidth="1.8"/>
+              <rect x="6" y="14" width="4" height="2" rx="0.5" fill="#FFC107"/>
+            </svg>
           </div>
-          <p className="text-sm text-muted-foreground">{phoneNumber}</p>
+          <div>
+            <p className="text-[15px] font-bold text-foreground">{provider}</p>
+            <p className="text-[12px] text-muted-foreground mt-0.5">{phoneNumber}</p>
+          </div>
         </div>
-        
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onPressChange}
-          className="text-primary hover:text-primary/80"
-        >
+        <button className="border border-border rounded-full px-4 py-2 text-[13px] font-semibold text-foreground bg-transparent">
           Change
-          <ChevronRight className="w-4 h-4 ml-1" />
-        </Button>
+        </button>
       </div>
     </div>
   );

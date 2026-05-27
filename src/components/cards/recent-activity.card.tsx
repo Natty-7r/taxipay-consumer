@@ -1,5 +1,4 @@
 import { formatCurrency } from '@/helpers/number.helper';
-import { ArrowUpRight } from 'lucide-react';
 
 interface RecentActivityCardProps {
   route: string;
@@ -7,23 +6,27 @@ interface RecentActivityCardProps {
   date: string;
   time: string;
   provider: string;
+  isLast?: boolean;
+  isRecent?: boolean;
 }
 
-export function RecentActivityCard({ route, amount, date, time, provider }: RecentActivityCardProps) {
+export function RecentActivityCard({ route, amount, date, time, provider, isLast, isRecent }: RecentActivityCardProps) {
   return (
-    <div className="flex items-center justify-between py-3 border-b border-border last:border-0">
-      <div className="flex-1">
-        <div className="flex items-center gap-2 mb-1">
-          <ArrowUpRight className="w-3 h-3 text-muted-foreground" />
-          <span className="font-medium text-foreground">{route}</span>
-        </div>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span>{date}, {time}</span>
-          <span>•</span>
-          <span>via {provider}</span>
+    <div className={`flex items-center justify-between px-[18px] py-[14px] ${!isLast ? 'border-b border-border' : ''}`}>
+      <div className="flex items-center gap-3">
+        <div
+          className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+          style={{ background: isRecent ? 'var(--color-primary)' : '#D1D5DB' }}
+        />
+        <div>
+          <p className="text-[14px] font-bold text-foreground mb-0.5">{route}</p>
+          <p className="text-[11px] text-muted-foreground">{date}, {time}</p>
         </div>
       </div>
-      <p className="font-semibold text-foreground">{formatCurrency(amount)}</p>
+      <div className="text-right">
+        <p className="text-[14px] font-bold text-foreground">{formatCurrency(amount)} ETB</p>
+        <p className="text-[11px] text-muted-foreground mt-0.5">via {provider}</p>
+      </div>
     </div>
   );
 }
