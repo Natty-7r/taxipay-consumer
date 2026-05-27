@@ -98,9 +98,18 @@ a,
   animation: glow 2s ease-in-out infinite;
 }
 
-@keyframes scan {
+/* @keyframes scan {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100%); }
+}
+
+.scan-line {
+  animation: scan 2s linear infinite;
+} */
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(300px); }
 }
 
 .scan-line {
