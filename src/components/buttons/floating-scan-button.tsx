@@ -13,6 +13,6 @@ export function FloatingScanButton() {
         <QrCode className="w-7 h-7" style={{ color: 'var(--color-primary-foreground)' }} />
       </button>
       <span className="text-[12px] font-semibold text-foreground">Scan to Pay</span>
-    </motion.div>
+    </div>
   );
 }
