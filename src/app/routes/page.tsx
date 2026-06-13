@@ -228,7 +228,7 @@ export default function SelectRoutePage() {
             </div>
           </div>
 
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <div className="-space-x-2 flex">
               <img
                 className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
@@ -243,10 +243,10 @@ export default function SelectRoutePage() {
               />
             </div>
 
-            <div className="-ml-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-[11px] font-extrabold text-primary-foreground ring-2 ring-white">
+             <div className="-ml-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-[11px] font-extrabold text-primary-foreground ring-2 ring-white">
               +12
-            </div>
-          </div>
+            </div> 
+          </div> */}
         </div>
 
         <button
