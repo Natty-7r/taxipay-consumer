@@ -1,15 +1,14 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { BottomNavigation } from '@/components/layout/bottom-navigation';
-import { CameraOverlay } from '@/components/scanner/scanner-overlay';
-import { ScannerFrame } from '@/components/scanner/scanner-frame';
-import { ScannerHeader } from '@/components/scanner/scanner.header';
-import { ScanInstruction } from '@/components/scanner/scanner-instruction';
-import { ScanFooter } from '@/components/scanner/scanner-footer'
-import { useQRScanner } from '@/hooks/useScanner';
-import { mockCurrentAccount } from '@/data/mock';
 import telebirrLogo from '@/assets/images/png/telebirr.png';
+import { ScanFooter } from '@/components/scanner/scanner-footer';
+import { ScannerFrame } from '@/components/scanner/scanner-frame';
+import { ScanInstruction } from '@/components/scanner/scanner-instruction';
+import { CameraOverlay } from '@/components/scanner/scanner-overlay';
+import { ScannerHeader } from '@/components/scanner/scanner.header';
+import { mockCurrentAccount } from '@/data/mock';
+import { useQRScanner } from '@/hooks/useScanner';
+import { useRouter } from 'next/navigation';
 
 export default function ScanPage() {
   const router = useRouter();
@@ -58,8 +57,6 @@ export default function ScanPage() {
         onManualEntry={handleManualEntry}
       />
 
-      {/* Bottom Navigation */}
-      <BottomNavigation />
     </div>
   );
 }

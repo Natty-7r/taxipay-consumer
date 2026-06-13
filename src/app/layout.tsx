@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Providers } from '@/components/providers';
 import './globals.css';
+import { BottomNavigation } from '@/components/layout/bottom-navigation';
 
 export const metadata: Metadata = {
   title: 'TaxiPay Consumer',
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-background">
         <Providers>
-          <main className="mobile-container">{children}</main>
+          <main className="mobile-container">{children}
+            <BottomNavigation />
+          </main>
         </Providers>
       </body>
     </html>
