@@ -4,7 +4,7 @@ export interface MockRoute {
   routeTo: string;
   price: number;
   estimatedTime: string;
-  distance?: string;
+  distance: string;
 }
 
 export interface MockTaxi {
@@ -26,7 +26,7 @@ export const mockRoutes: MockRoute[] = [
     routeTo: 'Megenagna',
     price: 120,
     estimatedTime: '15 min',
-    distance: '8 km',
+    distance: '8.2 km',
   },
   {
     id: 'r2',
@@ -34,7 +34,7 @@ export const mockRoutes: MockRoute[] = [
     routeTo: 'Bole Michael',
     price: 80,
     estimatedTime: '10 min',
-    distance: '5 km',
+    distance: '3.1 km',
   },
   {
     id: 'r3',
@@ -42,6 +42,6 @@ export const mockRoutes: MockRoute[] = [
     routeTo: 'Mexico',
     price: 150,
     estimatedTime: '20 min',
-    distance: '12 km',
+    distance: '7.8 km',
   },
 ];

@@ -1,23 +1,20 @@
 'use client';
 
-import { Scan } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { QrCode, Scan } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export function FloatingScanButton() {
   const router = useRouter();
-
   return (
-    <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50">
-      <Button
-        onClick={() => router.push('/scan')}
-        className="w-16 h-16 rounded-full bg-primary shadow-lg shadow-primary/30 hover:shadow-xl transition-all duration-200 hover:scale-105 active:scale-95"
+    <div className="fixed bottom-[72px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-10" onClick={() => router.push('/scan')}>
+      <button
+        aria-label="Scan to Pay"
+        className="w-16 h-16 rounded-full flex items-center justify-center border-none cursor-pointer glow bg-secondary text-white"
+        style={{ background: 'var(--color-primary)' }}
       >
-        <Scan className="w-7 h-7 text-primary-foreground" />
-      </Button>
-      <p className="text-center text-xs font-medium text-foreground mt-2">
-        Scan to Pay
-      </p>
+        <QrCode className="w-7 h-7" style={{ color: 'var(--color-primary-foreground)' }} />
+      </button>
+      <span className="text-[12px] font-semibold text-foreground">Scan to Pay</span>
     </div>
   );
 }

@@ -3,26 +3,35 @@
 /* Custom theme configuration */
 @theme {
   --color-primary: #FFC107;
+  --color-primary-hover: #FFB300;
   --color-primary-foreground: #1A2A3A;
+
   --color-secondary: #1A2A3A;
   --color-secondary-foreground: #FFFFFF;
+
   --color-success: #10B981;
-  --color-success-foreground: #FFFFFF;
-  --color-error: #EF4444;
-  --color-error-foreground: #FFFFFF;
-  --color-background: #FFFFFF;
+  --color-success-soft: #E0F2F1;
+  --color-success-foreground: #00695C;
+
+  --color-info: #3B82F6;
+  --color-info-soft: #EDF3FB;
+  --color-info-border: #D9E6F6;
+  --color-info-foreground: #1E3A8A;
+
+  --color-background: #FCFAF7;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F5EFE6;
+
   --color-foreground: #1A2A3A;
-  --color-card: #FFFFFF;
-  --color-card-foreground: #1A2A3A;
-  --color-muted: #F9FAFB;
-  --color-muted-foreground: #9CA3AF;
-  --color-border: #F0F0F0;
-  
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --color-foreground-muted: #8A8073;
+  --color-foreground-soft: #BFB8AE;
+
+  --color-border: #F0ECE6;
+  --color-border-strong: #EDEAE4;
+  --color-border-hover: #D1CDC3;
+
+  --color-ring: #FFC107;
+  --color-accent-text: #7D5A2B;
 }
 
 /* Dark mode */
@@ -98,9 +107,18 @@ a,
   animation: glow 2s ease-in-out infinite;
 }
 
-@keyframes scan {
+/* @keyframes scan {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100%); }
+}
+
+.scan-line {
+  animation: scan 2s linear infinite;
+} */
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(300px); }
 }
 
 .scan-line {
