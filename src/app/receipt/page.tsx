@@ -1,22 +1,20 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { Suspense } from 'react';
 
 import {
   ArrowLeft,
-  Copy,
-  FileText,
   Code,
-  Share2,
-  Home,
-  Clock,
+  Copy,
   CreditCard,
+  FileText,
+  Share2
 } from 'lucide-react';
 
-import { mockTaxi, mockRoutes } from '@/data/mock/routes.mock';
+import { mockRoutes, mockTaxi } from '@/data/mock/routes.mock';
 
 function ReceiptPageContent() {
   const searchParams = useSearchParams();
@@ -349,45 +347,7 @@ function ReceiptPageContent() {
         </motion.div>
       </div>
 
-      {/* BOTTOM NAV */}
-      <nav className="fixed bottom-0 left-1/2 z-20 flex w-full max-w-[428px] -translate-x-1/2 items-center justify-around border-t border-border bg-surface px-2 pb-6 pt-2.5 shadow-[0_-4px_24px_rgba(0,0,0,0.03)]">
-        <Link
-          href="/"
-          className="flex min-w-[56px] flex-col items-center gap-1 py-1 text-muted-foreground"
-        >
-          <Home size={22} strokeWidth={1.8} />
 
-          <span className="text-[10px] font-semibold">
-            Home
-          </span>
-        </Link>
-
-        {/* ACTIVE TAB */}
-        <div className="flex min-w-[56px] flex-col items-center gap-1 py-1 text-foreground">
-          <div className="flex flex-col items-center gap-0.5 rounded-full bg-primary/10 px-4 py-1.5">
-            <Clock
-              size={20}
-              strokeWidth={2.5}
-              className="text-accent-text"
-            />
-
-            <span className="text-[9px] font-black uppercase tracking-wide text-accent-text">
-              History
-            </span>
-          </div>
-        </div>
-
-        <Link
-          href="/"
-          className="flex min-w-[56px] flex-col items-center gap-1 py-1 text-muted-foreground"
-        >
-          <CreditCard size={22} strokeWidth={1.8} />
-
-          <span className="text-[10px] font-semibold">
-            Wallet
-          </span>
-        </Link>
-      </nav>
     </div>
   );
 }

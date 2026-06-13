@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowLeft, Car, Compass, Map, SlidersHorizontal, Truck } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, SlidersHorizontal, Car, Truck, Map, Compass, Home, Clock, CreditCard } from 'lucide-react';
+import { useState } from 'react';
 
 interface Transaction {
   id: string;
@@ -144,11 +144,10 @@ export default function HistoryPage() {
               <button
                 key={provider}
                 onClick={() => setSelectedProvider(provider)}
-                className={`px-5 py-3 rounded-full text-[13px] font-bold border transition-all duration-150 flex-shrink-0 cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.01)] ${
-                  isSelected
-                    ? 'bg-[#FFC107] border-[#FFC107] text-[#1A2A3A] font-extrabold'
-                    : 'bg-[#FAF3E8] border-[#EDE6D8] text-[#8A8073] hover:bg-[#FAF8F5]'
-                }`}
+                className={`px-5 py-3 rounded-full text-[13px] font-bold border transition-all duration-150 flex-shrink-0 cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.01)] ${isSelected
+                  ? 'bg-[#FFC107] border-[#FFC107] text-[#1A2A3A] font-extrabold'
+                  : 'bg-[#FAF3E8] border-[#EDE6D8] text-[#8A8073] hover:bg-[#FAF8F5]'
+                  }`}
               >
                 {provider}
               </button>
@@ -222,14 +221,13 @@ export default function HistoryPage() {
                         <span className="text-[14px] font-black text-[#1A2A3A] leading-none">
                           {tx.amount} ETB
                         </span>
-                        
+
                         {/* SUCCESS / FAILED Pill badge */}
                         <span
-                          className={`text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded ${
-                            tx.status === 'SUCCESS'
-                              ? 'bg-[#EBFBF5] text-[#10B981]'
-                              : 'bg-[#FDF2F2] text-[#EF4444]'
-                          }`}
+                          className={`text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded ${tx.status === 'SUCCESS'
+                            ? 'bg-[#EBFBF5] text-[#10B981]'
+                            : 'bg-[#FDF2F2] text-[#EF4444]'
+                            }`}
                         >
                           {tx.status}
                         </span>
@@ -254,26 +252,6 @@ export default function HistoryPage() {
         )}
       </div>
 
-      {/* BOTTOM NAV BAR */}
-      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[428px] bg-white border-t border-[#F0ECE6] flex items-center justify-around px-2 pt-2.5 pb-6 z-20 shadow-[0_-4px_24px_rgba(0,0,0,0.03)]">
-        <Link href="/" className="flex flex-col items-center gap-1 min-w-[56px] py-1 text-[#9CA3AF]">
-          <Home size={22} strokeWidth={1.8} />
-          <span className="text-[10px] font-semibold">Home</span>
-        </Link>
-        
-        {/* Active History Tab */}
-        <div className="flex flex-col items-center gap-1 min-w-[56px] py-1 text-[#1A2A3A]">
-          <div className="bg-[#FAF3E8] px-4 py-1.5 rounded-full flex flex-col items-center gap-0.5">
-            <Clock size={20} strokeWidth={2.5} className="text-[#7D5A2B]" />
-            <span className="text-[9px] font-black text-[#7D5A2B] tracking-wide uppercase">History</span>
-          </div>
-        </div>
-
-        <Link href="/" className="flex flex-col items-center gap-1 min-w-[56px] py-1 text-[#9CA3AF]">
-          <CreditCard size={22} strokeWidth={1.8} />
-          <span className="text-[10px] font-semibold">Wallet</span>
-        </Link>
-      </nav>
     </div>
   );
 }

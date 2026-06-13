@@ -1,12 +1,10 @@
 'use client';
-import { HomeHeader } from '@/components/layout/home-header';
-import { TotalSpentCard } from '@/components/cards/total-spent.card';
-import { PaymentAccountCard } from '@/components/cards/payment-account.card';
 import { LinkedAccountCard } from '@/components/cards/linked-account.card';
+import { PaymentAccountCard } from '@/components/cards/payment-account.card';
 import { RecentActivityCard } from '@/components/cards/recent-activity.card';
-import { FloatingScanButton } from '@/components/buttons/floating-scan-button';
-import { BottomNavigation } from '@/components/layout/bottom-navigation';
-import { mockUser, mockTotalSpent, mockCurrentAccount, mockLinkedAccounts, mockRecentActivities } from '@/data/mock';
+import { TotalSpentCard } from '@/components/cards/total-spent.card';
+import { HomeHeader } from '@/components/layout/home-header';
+import { mockCurrentAccount, mockLinkedAccounts, mockRecentActivities, mockTotalSpent, mockUser } from '@/data/mock';
 
 export default function HomePage() {
   return (
@@ -23,7 +21,7 @@ export default function HomePage() {
             <h2 className="text-[11px] font-bold tracking-[1.2px] text-muted-foreground uppercase">My Accounts</h2>
             <button className="w-8 h-8 rounded-full bg-card border border-border flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
               </svg>
             </button>
           </div>
@@ -58,8 +56,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <FloatingScanButton />
-      <BottomNavigation />
+
     </div>
   );
 }
