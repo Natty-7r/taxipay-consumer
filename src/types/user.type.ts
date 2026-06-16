@@ -45,6 +45,7 @@ export interface LinkedAccount {
   isPrimary: boolean;
   spent: number;
   maskedNumber: string;
+  linkedDate?: string;
 }
 
 export interface UserSession {
