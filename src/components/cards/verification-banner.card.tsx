@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCircle, ShieldCheck } from 'lucide-react';
+import { Check, Clock, X, BadgeCheck, AlertCircle } from 'lucide-react';
 
 type VerificationStatus = 'verified' | 'pending' | 'rejected' | 'none';
 
@@ -45,6 +45,48 @@ const STATUS_CONFIG: Record<
 export function VerificationBannerCard({ status }: VerificationBannerCardProps) {
   const config = STATUS_CONFIG[status];
 
+  // Helper to render the appropriate status-specific left icon
+  const renderLeftIcon = () => {
+    switch (status) {
+      case 'verified':
+        return (
+          <div
+            className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+            style={{ backgroundColor: config.iconColor }}
+          >
+            <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+          </div>
+        );
+      case 'pending':
+        return (
+          <div
+            className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+            style={{ backgroundColor: config.iconColor }}
+          >
+            <Clock className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+          </div>
+        );
+      case 'rejected':
+        return (
+          <div
+            className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+            style={{ backgroundColor: config.iconColor }}
+          >
+            <X className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+          </div>
+        );
+      default:
+        return (
+          <div
+            className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+            style={{ backgroundColor: config.iconColor }}
+          >
+            <AlertCircle className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+          </div>
+        );
+    }
+  };
+
   return (
     <div
       className="flex items-center gap-3 rounded-2xl px-4 py-3.5 mb-6"
@@ -52,12 +94,7 @@ export function VerificationBannerCard({ status }: VerificationBannerCardProps) 
       role="status"
       aria-label={`Identity status: ${config.title}`}
     >
-      <CheckCircle
-        className="w-6 h-6 flex-shrink-0"
-        style={{ color: config.iconColor }}
-        fill={config.iconColor}
-        strokeWidth={0}
-      />
+      {renderLeftIcon()}
       <div className="flex-1 min-w-0">
         <p
           className="text-[14px] font-semibold leading-tight"
@@ -72,7 +109,7 @@ export function VerificationBannerCard({ status }: VerificationBannerCardProps) 
           {config.subtitle}
         </p>
       </div>
-      <ShieldCheck
+      <BadgeCheck
         className="w-6 h-6 flex-shrink-0"
         style={{ color: config.iconColor }}
       />
