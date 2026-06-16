@@ -38,7 +38,7 @@ export default function ProfilePage() {
             <h2 className="text-[11px] font-bold tracking-[1.2px] text-foreground-muted uppercase">
               Linked Payment Hubs
             </h2>
-            <button className="text-[13px] font-semibold text-foreground hover:text-foreground/80 transition-colors">
+            <button className="text-[13px] font-semibold text-foreground-muted hover:text-foreground/80 transition-colors">
               + Add New
             </button>
           </div>
