@@ -21,7 +21,8 @@ export function useQRScanner({
   const [torchEnabled, setTorchEnabled] = useState(false);
   const [scannedData, setScannedData] = useState<string | null>(null);
   const [showPermissionDialog, setShowPermissionDialog] = useState(false);
-  const [isPermissionRequested, setIsPermissionRequested] = useState(false);
+  // 'denied' = browser said no; 'granted' = ok; 'prompt' = not yet asked
+  const [permissionState, setPermissionState] = useState<PermissionState>('prompt');
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const controlsRef = useRef<IScannerControls | null>(null);
   const isScanningRef = useRef<boolean>(false);
@@ -37,9 +38,7 @@ export function useQRScanner({
     setTimeout(() => {
       if (!isMountedRef.current) return;
       setState('success');
-      if (onSuccess) {
-        onSuccess(data);
-      }
+      if (onSuccess) onSuccess(data);
     }, processDelay);
   }, [onSuccess, processDelay]);
 
@@ -47,20 +46,12 @@ export function useQRScanner({
     isScanningRef.current = false;
 
     if (controlsRef.current) {
-      try {
-        controlsRef.current.stop();
-      } catch (e) {
-        // Ignore
-      }
+      try { controlsRef.current.stop(); } catch (_) {}
       controlsRef.current = null;
     }
 
     if (streamRef.current) {
-      try {
-        streamRef.current.getTracks().forEach(track => track.stop());
-      } catch (e) {
-        // Ignore
-      }
+      try { streamRef.current.getTracks().forEach(t => t.stop()); } catch (_) {}
       streamRef.current = null;
     }
 
@@ -69,9 +60,7 @@ export function useQRScanner({
         videoRef.current.pause();
         videoRef.current.srcObject = null;
         videoRef.current.load();
-      } catch (e) {
-        // Ignore
-      }
+      } catch (_) {}
     }
 
     if (mockTimerRef.current) {
@@ -81,7 +70,7 @@ export function useQRScanner({
   }, []);
 
   const startMockScanning = useCallback(() => {
-    if (state !== 'scanning' || !isMountedRef.current) return;
+    if (!isMountedRef.current) return;
 
     mockTimerRef.current = setTimeout(() => {
       if (!isMountedRef.current) return;
@@ -92,85 +81,40 @@ export function useQRScanner({
         timestamp: new Date().toISOString(),
       });
 
-      setScannedData(mockQRData);
-      setState('loading');
-
-      setTimeout(() => {
-        if (!isMountedRef.current) return;
-        setState('success');
-        if (onSuccess) {
-          onSuccess(mockQRData);
-        }
-      }, processDelay);
+      handleScanSuccess(mockQRData);
     }, scanDelay);
-  }, [state, scanDelay, processDelay, onSuccess]);
+  }, [scanDelay, handleScanSuccess]);
 
-  const checkCameraPermission = useCallback(async () => {
+  const checkCameraPermission = useCallback(async (): Promise<PermissionState> => {
     try {
-      // Check if we already have permission
-      const permissionStatus = await navigator.permissions.query({ name: 'camera' as PermissionName });
-
-      if (permissionStatus.state === 'granted') {
-        return 'granted';
-      } else if (permissionStatus.state === 'denied') {
-        return 'denied';
-      } else {
-        return 'prompt';
-      }
-    } catch (error) {
-      // Some browsers don't support navigator.permissions
-      // We'll assume we need to show the dialog
+      const status = await navigator.permissions.query({ name: 'camera' as PermissionName });
+      return status.state;
+    } catch {
       return 'prompt';
     }
   }, []);
 
-  const startCamera = useCallback(async () => {
+  const startCameraStream = useCallback(async () => {
+    if (!videoRef.current || !isMountedRef.current) return false;
+
     try {
-      if (!videoRef.current) {
-        console.error('Video element not available');
-        return null;
-      }
-
-      // Check permission first
-      const permissionStatus = await checkCameraPermission();
-
-      if (permissionStatus === 'denied') {
-        setState('error');
-        return null;
-      }
-
-      if (permissionStatus === 'prompt' && !isPermissionRequested) {
-        // Show our custom dialog instead of browser prompt
-        setShowPermissionDialog(true);
-        return null;
-      }
-
-      // If we already have permission or user just granted it
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current.getTracks().forEach(t => t.stop());
         streamRef.current = null;
       }
-
-      if (videoRef.current.srcObject) {
-        videoRef.current.srcObject = null;
-      }
+      if (videoRef.current.srcObject) videoRef.current.srcObject = null;
 
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: 'environment',
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-        },
+        video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
         audio: false,
       });
 
       streamRef.current = stream;
+      setPermissionState('granted');
 
       if (videoRef.current && isMountedRef.current) {
         videoRef.current.srcObject = stream;
-        await videoRef.current.play().catch((err) => {
-          console.warn('Video play error:', err);
-        });
+        await videoRef.current.play().catch(() => {});
       }
 
       const reader = new BrowserQRCodeReader();
@@ -180,139 +124,101 @@ export function useQRScanner({
         stream,
         videoRef.current || undefined,
         (result: Result | undefined, error: Error | undefined) => {
-          if (error || !isMountedRef.current) {
-            return;
-          }
-
+          if (error || !isMountedRef.current) return;
           if (result && isScanningRef.current) {
             isScanningRef.current = false;
-            const qrData = result.getText();
-            handleScanSuccess(qrData);
+            handleScanSuccess(result.getText());
           }
         }
       );
 
-      return stream;
-    } catch (error) {
-      console.error('Camera access error:', error);
-      // If user denied permission in browser dialog
-      if ((error as Error).name === 'NotAllowedError') {
+      return true;
+    } catch (err) {
+      const error = err as Error;
+      if (error.name === 'NotAllowedError') {
+        setPermissionState('denied');
         setState('error');
         setShowPermissionDialog(false);
       } else if (isMountedRef.current) {
+        // Camera hardware error or unavailable — fall back to mock
         startMockScanning();
       }
-      return null;
-    }
-  }, [checkCameraPermission, handleScanSuccess, isPermissionRequested]);
-
-  const requestCameraPermission = useCallback(async () => {
-    try {
-      setShowPermissionDialog(false);
-      setIsPermissionRequested(true);
-
-      // Now call getUserMedia - this will show the browser's native dialog
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: 'environment',
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-        },
-        audio: false,
-      });
-
-      // If we got here, permission was granted
-      stream.getTracks().forEach(track => track.stop());
-      setIsPermissionRequested(true);
-      setState('scanning');
-
-      // Start scanning with the camera
-      await startCamera();
-      return true;
-    } catch (error) {
-      console.error('Camera permission denied:', error);
-      setIsPermissionRequested(false);
-      setState('error');
       return false;
     }
-  }, [startCamera]);
+  }, [handleScanSuccess, startMockScanning]);
 
-  const startScanning = useCallback(async () => {
-    if (!isMountedRef.current) return;
-
-    stopScanner();
-
+  /**
+   * requestCameraPermission — called from the dialog's "Allow" button.
+   * Hides dialog, triggers browser prompt, then starts camera or falls back.
+   */
+  const requestCameraPermission = useCallback(async () => {
+    setShowPermissionDialog(false);
     setState('scanning');
     setScannedData(null);
-    isScanningRef.current = true;
 
-    // Check if we have permission before starting camera
-    const permissionStatus = await checkCameraPermission();
-
-    if (permissionStatus === 'granted') {
-      // We have permission, start camera directly
-      const stream = await startCamera();
-      if (!stream && isMountedRef.current) {
-        startMockScanning();
-      }
-    } else if (permissionStatus === 'prompt' && !isPermissionRequested) {
-      // Show our custom permission dialog
-      setShowPermissionDialog(true);
-    } else if (permissionStatus === 'denied') {
-      setState('error');
-    } else {
-      // Fallback to mock
+    const ok = await startCameraStream();
+    if (!ok && isMountedRef.current && permissionState !== 'denied') {
       startMockScanning();
     }
-  }, [startCamera, startMockScanning, stopScanner, checkCameraPermission, isPermissionRequested]);
+  }, [startCameraStream, startMockScanning, permissionState]);
 
+  /**
+   * retry — called from the error state or "Try Again" button.
+   * Always re-shows the permission dialog so the user can try again.
+   */
   const retry = useCallback(() => {
-    if (isMountedRef.current) {
-      setIsPermissionRequested(false);
-      setShowPermissionDialog(true);
-    }
-  }, []);
+    if (!isMountedRef.current) return;
+    stopScanner();
+    // Reset denied state so user has a chance to go to settings / try again
+    setPermissionState('prompt');
+    setState('scanning');
+    setScannedData(null);
+    setShowPermissionDialog(true);
+  }, [stopScanner]);
 
-  const toggleTorch = useCallback(() => {
-    setTorchEnabled(prev => !prev);
-  }, []);
+  const toggleTorch = useCallback(() => setTorchEnabled(prev => !prev), []);
 
-  // Check permission on mount
-  useEffect(() => {
-    const init = async () => {
-      const permissionStatus = await checkCameraPermission();
-      if (permissionStatus === 'granted') {
-        startScanning();
-      } else if (permissionStatus === 'prompt') {
-        setShowPermissionDialog(true);
-      } else if (permissionStatus === 'denied') {
-        setState('error');
-      }
-    };
-    init();
-  }, [checkCameraPermission, startScanning]);
-
+  // On mount: check existing permission and act accordingly
   useEffect(() => {
     isMountedRef.current = true;
+
+    const init = async () => {
+      const perm = await checkCameraPermission();
+      setPermissionState(perm);
+
+      if (perm === 'granted') {
+        // Start camera immediately, no dialog needed
+        const ok = await startCameraStream();
+        if (!ok && isMountedRef.current) startMockScanning();
+      } else if (perm === 'denied') {
+        setState('error');
+      } else {
+        // 'prompt' — show our custom dialog before the browser one
+        setShowPermissionDialog(true);
+      }
+    };
+
+    init();
 
     return () => {
       isMountedRef.current = false;
       stopScanner();
     };
-  }, [stopScanner]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     state,
     torchEnabled,
     scannedData,
     videoRef,
+    permissionState,
     showPermissionDialog,
-    startScanning,
+    setShowPermissionDialog,
+    requestCameraPermission,
     retry,
     toggleTorch,
     stopScanner,
     isScanning: state === 'scanning',
-    requestCameraPermission,
-    setShowPermissionDialog,
   };
 }
