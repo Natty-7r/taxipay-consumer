@@ -125,11 +125,10 @@ export default function SelectRoutePage() {
                   delay: idx * 0.08,
                 }}
                 onClick={() => setSelectedRouteId(route.id)}
-                className={`flex cursor-pointer items-center justify-between rounded-2xl border bg-surface p-[18px] transition-all duration-200 ${
-                  isSelected
-                    ? 'border-primary ring-1 ring-ring'
-                    : 'border-border-strong hover:border-border-hover'
-                }`}
+                className={`flex cursor-pointer items-center justify-between rounded-2xl border bg-surface p-[18px] transition-all duration-200 ${isSelected
+                  ? 'border-primary ring-1 ring-ring'
+                  : 'border-border-strong hover:border-border-hover'
+                  }`}
               >
                 <div className="flex-1">
                   <h4 className="mb-2 flex items-center gap-2 text-[16px] font-extrabold">
@@ -167,11 +166,10 @@ export default function SelectRoutePage() {
                   </div>
 
                   <div
-                    className={`flex h-5 w-5 items-center justify-center rounded-full border ${
-                      isSelected
-                        ? 'border-primary'
-                        : 'border-border-hover'
-                    }`}
+                    className={`flex h-5 w-5 items-center justify-center rounded-full border ${isSelected
+                      ? 'border-primary'
+                      : 'border-border-hover'
+                      }`}
                   >
                     {isSelected && (
                       <div className="h-2.5 w-2.5 rounded-full bg-primary" />
@@ -210,7 +208,7 @@ export default function SelectRoutePage() {
       </div>
 
       {/* FOOTER */}
-      <div className="fixed bottom-0 left-1/2 z-20 flex w-full max-w-[428px] -translate-x-1/2 flex-col gap-4 border-t border-border bg-surface px-5 pb-6 pt-4 shadow-[0_-4px_24px_rgba(0,0,0,0.03)]">
+      <div className="fixed bottom-[8%] left-1/2 z-20 flex w-full max-w-[428px] -translate-x-1/2 flex-col gap-4 border-t border-border bg-surface px-5 pb-6 pt-4 shadow-[0_-4px_24px_rgba(0,0,0,0.03)]">
         <div className="flex items-center justify-between">
           <div>
             <span className="mb-0.5 block text-[11px] font-extrabold uppercase tracking-wider text-foreground-muted">
@@ -252,11 +250,10 @@ export default function SelectRoutePage() {
         <button
           onClick={handleConfirmPay}
           disabled={!selectedRoute}
-          className={`flex h-14 w-full items-center justify-center gap-2 rounded-2xl text-[16px] font-extrabold transition-all duration-200 ${
-            selectedRoute
-              ? 'bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(255,193,7,0.2)] hover:bg-primary-hover active:scale-[0.99]'
-              : 'cursor-not-allowed bg-muted text-foreground-soft'
-          }`}
+          className={`flex h-14 w-full items-center justify-center gap-2 rounded-2xl text-[16px] font-extrabold transition-all duration-200 ${selectedRoute
+            ? 'bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(255,193,7,0.2)] hover:bg-primary-hover active:scale-[0.99]'
+            : 'cursor-not-allowed bg-muted text-foreground-soft'
+            }`}
         >
           Confirm & Pay
 
