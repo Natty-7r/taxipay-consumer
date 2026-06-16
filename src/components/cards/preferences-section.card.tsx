@@ -1,7 +1,7 @@
 'use client';
 
-import { Globe, Bell, Shield, LogOut, ChevronRight } from 'lucide-react';
-import { useState, useCallback } from 'react';
+import { Bell, ChevronRight, Globe, LogOut, ShieldCheck } from 'lucide-react';
+import { useCallback, useState } from 'react';
 
 interface PreferencesSectionCardProps {
   language?: string;
@@ -81,7 +81,7 @@ export function PreferencesSectionCard({
           aria-label="Security and Biometrics"
         >
           <div className="flex items-center gap-3">
-            <Shield className="w-5 h-5 text-foreground" />
+            <ShieldCheck className="w-5 h-5 text-foreground" />
             <span className="text-[14px] font-medium text-foreground">Security & Biometrics</span>
           </div>
           <ChevronRight className="w-4 h-4 text-foreground-muted" />
