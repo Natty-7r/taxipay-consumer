@@ -57,7 +57,7 @@ export function PreferencesSectionCard({
             <Bell className="w-5 h-5 text-foreground" />
             <span className="text-[14px] font-medium text-foreground">Push Notifications</span>
           </div>
-          <button
+          <div
             role="switch"
             aria-checked={notificationsOn}
             aria-label="Toggle push notifications"
@@ -71,7 +71,7 @@ export function PreferencesSectionCard({
                 notificationsOn ? 'translate-x-[22px]' : 'translate-x-[2px]'
               }`}
             />
-          </button>
+          </div>
         </div>
 
         {/* Security & Biometrics */}
