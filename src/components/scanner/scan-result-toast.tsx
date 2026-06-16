@@ -27,7 +27,7 @@ export function ScanResultToast({ data, visible, onDismiss }: ScanResultToastPro
 
   const handleCopy = async () => {
     if (!data) return;
-    await navigator.clipboard.writeText(data).catch(() => {});
+    await navigator.clipboard.writeText(data).catch(() => { });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -35,6 +35,8 @@ export function ScanResultToast({ data, visible, onDismiss }: ScanResultToastPro
   useEffect(() => {
     if (!visible) setCopied(false);
   }, [visible]);
+
+  return null
 
   return (
     <div
