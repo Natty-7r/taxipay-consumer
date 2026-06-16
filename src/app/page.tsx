@@ -29,6 +29,7 @@ export default function HomePage() {
                 provider={activity.provider}
                 isLast={i === mockRecentActivities.length - 1}
                 isRecent={i === 0}
+                routeId={activity.routeId}
               />
             ))}
           </div>
