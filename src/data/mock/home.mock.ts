@@ -7,6 +7,7 @@ export interface RecentActivity {
   provider: 'TELEBIRR' | 'MPESA' | 'CBE';
   status: 'success' | 'failed' | 'pending';
   taxiPlate?: string;
+  routeId?: string;
 }
 
 export const mockRecentActivities: RecentActivity[] = [
@@ -19,6 +20,7 @@ export const mockRecentActivities: RecentActivity[] = [
     provider: 'TELEBIRR',
     status: 'success',
     taxiPlate: 'AA-12345',
+    routeId: 'r1',
   },
   {
     id: 'act_002',
@@ -29,6 +31,7 @@ export const mockRecentActivities: RecentActivity[] = [
     provider: 'MPESA',
     status: 'success',
     taxiPlate: 'AA-67890',
+    routeId: 'r2',
   },
   {
     id: 'act_003',
@@ -39,6 +42,7 @@ export const mockRecentActivities: RecentActivity[] = [
     provider: 'TELEBIRR',
     status: 'success',
     taxiPlate: 'AA-54321',
+    routeId: 'r3',
   },
 ];
 

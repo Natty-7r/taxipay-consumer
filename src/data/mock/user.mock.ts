@@ -14,15 +14,16 @@ export interface MockLinkedAccount {
   maskedNumber: string;
   spent: number;
   isPrimary: boolean;
+  linkedDate?: string;
 }
 
 export const mockUser: MockUser = {
   id: 'usr_001',
-  firstName: 'Abebe',
-  lastName: 'Kebede',
-  email: 'abebe.kebede@example.com',
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'john.doe@example.com',
   phoneNumber: '+251 911 123 456',
-  nidNumber: '1234 **** 7890',
+  nidNumber: '1234 •••• 7890',
 };
 
 export const mockLinkedAccounts: MockLinkedAccount[] = [
@@ -39,6 +40,7 @@ export const mockLinkedAccounts: MockLinkedAccount[] = [
     maskedNumber: '+254 7XX ***456',
     spent: 400,
     isPrimary: false,
+    linkedDate: 'Jan 2024',
   },
   {
     provider: 'CBE',
@@ -46,6 +48,7 @@ export const mockLinkedAccounts: MockLinkedAccount[] = [
     maskedNumber: '+251 9XX ***789',
     spent: 200,
     isPrimary: false,
+    linkedDate: 'Mar 2024',
   },
 ];
 
