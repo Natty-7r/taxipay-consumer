@@ -27,20 +27,21 @@ export const mockUser: MockUser = {
 };
 
 export const mockLinkedAccounts: MockLinkedAccount[] = [
-  {
-    provider: 'TELEBIRR',
-    phoneNumber: '+251 9XX XXX123',
-    maskedNumber: '+251 9XX ***123',
-    spent: 650,
-    isPrimary: true,
-  },
+
   {
     provider: 'MPESA',
     phoneNumber: '+254 7XX XXX456',
     maskedNumber: '+254 7XX ***456',
     spent: 400,
-    isPrimary: false,
+    isPrimary: true,
     linkedDate: 'Jan 2024',
+  },
+    {
+    provider: 'TELEBIRR',
+    phoneNumber: '+251 9XX XXX123',
+    maskedNumber: '+251 9XX ***123',
+    spent: 650,
+    isPrimary: false,
   },
   {
     provider: 'CBE',
